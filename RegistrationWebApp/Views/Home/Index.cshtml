@@ -1,0 +1,68 @@
+﻿@model IEnumerable<User>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<link rel="stylesheet" href="~/css/button.css" />
+<div class="text-center">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-controller="Home" asp-action="Manage" method="post">
+            <div asp-validation-summary="All" class="text-danger m-1"></div>
+            <div class="row m-1">
+                <button type="submit" name="actionName" value="Block" class="btn btn-labeled btn-warning m-1">
+                    <span class="btn-label">
+                        <img src="~/img/block_icon.png" width="18" />
+                    </span>
+                    <strong>Block</strong>
+                </button>
+                <button type="submit" name="actionName" value="Unblock" class="btn btn-labeled btn-success m-1">
+                    <span class="btn-label">
+                        <img src="~/img/unblock_icon.png" width="18" />
+                    </span>
+                    <strong>Unblock</strong>
+                </button>
+                <button type="submit" name="actionName" value="Delete" class="btn btn-labeled btn-danger m-1">
+                    <span class="btn-label">
+                        <img src="~/img/delete_icon.png" width="16" />
+                    </span>
+                    <strong>Delete</strong>
+                </button>
+            </div>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th><input onclick="mainCheckBoxClicked()" type="checkbox" id="mainCheckBox" /></th>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Registration date</th>
+                        <th>Login date</th>
+                        <th>State</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <th><input onclick="singleCheckBoxClicked(this)" class="singleCheckBox" type="checkbox" name="ids" value="@user.Id" /></th>
+                            <th>@user.Id</th>
+                            <td>@user.UserName</td>
+                            <td>@user.Email</td>
+                            <td>@user.RegistrationDate</td>
+                            <td>@user.LoginDate</td>
+                            <td class="@(user.IsBlocked ? "text-danger" : "text-success")"><strong>@(user.IsBlocked ? "Blocked" : "Active")</strong></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+    }
+    else
+    {
+        <h4><a asp-controller="Account" asp-action="Login">Log in</a> to manage users</h4>
+    }
+</div>
+
+<script src="~/js/TableCheckBoxesScript.js" asp-append-version="true"></script>

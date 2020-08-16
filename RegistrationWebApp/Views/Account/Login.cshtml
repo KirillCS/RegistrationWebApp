@@ -1,0 +1,44 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card">
+            <header class="card-header">
+                <h4 class="text-center">Login</h4>
+            </header>
+            <article class="card-body">
+                <form asp-route-returnUrl="@Model.ReturnUrl" asp-controller="Account" asp-action="Login" method="post">
+                    <div class="form-group">
+                        <label asp-for="UserName"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label asp-for="RememberMe">
+                                <input asp-for="RememberMe" />
+                                @Html.DisplayNameFor(m => m.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                    </div>
+                </form>
+            </article>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
